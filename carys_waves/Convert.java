@@ -8,7 +8,7 @@ import java.io.*;
 	32 wavetables x 64 entries x 256 unsigned bytes per entry
 */
 
-public class Cary
+public class Convert
 {
 	public static void
 	main (String[] inArgs)
