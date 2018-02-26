@@ -7,7 +7,7 @@ public class Unshuffle
 	main (String[] inArgs)
 	throws Exception
 	{
-		FileOutputStream	fos = new FileOutputStream ("jason.bin");
+		FileOutputStream	fos = new FileOutputStream ("ppg_wavetables_linear.bin");
 		
 		FileInputStream	temp1 = new FileInputStream ("temp1");
 		FileInputStream	temp2 = new FileInputStream ("temp2");

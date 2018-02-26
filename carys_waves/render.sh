@@ -20,6 +20,6 @@ java Unshuffle
 # and now we render out the linear wavetables to e352 wavs
 echo rendering e352 wavs from linear wavetable
 
-java Convert jason.bin
+java Convert ppg_wavetables_linear.bin
 
 

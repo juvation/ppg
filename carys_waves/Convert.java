@@ -77,7 +77,7 @@ public class Convert
 		{
 			int	tableOffset = table * (64 * 256);
 			
-			String	outputFileName = "ppg_wavetable_" + (table < 10 ? "0" : "") + table + ".wav";
+			String	outputFileName = "ppg_" + (table < 10 ? "0" : "") + table + ".wav";
 
 			FileOutputStream	fos = new FileOutputStream (outputFileName);
 
@@ -159,8 +159,6 @@ public class Convert
 						if (wave == 63)
 						{
 							// positive-going ramp
-
-							// we go from max neg to max positive in 256 steps
 							sampleData = (65536 / 256) * sample;
 							sampleData -= 32768;
 						}
