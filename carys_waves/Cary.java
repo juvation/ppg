@@ -91,54 +91,16 @@ public class Cary
 				{
 					int	waveOffset = wave * 256;
 
-					if (inputFileName.equals ("ppg.bin"))
+					// if we are working with Cary's v3 file then he has undoubled and octaved down already
+					for (int sample = 0; sample < 256; sample++)
 					{
-						// note the 352 has 256 samples per wave just like the Miniwave
-						// BUT Cary's waves are doubled, doubling the frequency
-						// so we undouble and interpolate - poorly
-						for (int sample = 0; sample < 128; sample++)
-						{
-							offset = tableOffset + waveOffset + sample;
-				
-							int	sampleData = buffer [offset];
-				
-							// little-endian
-							fos.write (sampleData & 0xff);
-							fos.write ((sampleData >> 8) & 0xff);
-						
-							int	nextSampleData = 0;
-						
-							if (sample < 127)
-							{
-								// interpolate with the next sample
-								nextSampleData = buffer [offset + 1];
-							}
-							else
-							{
-								// interpolate with the zeroth sample
-								nextSampleData = buffer [tableOffset + waveOffset];
-							}
-							
-							sampleData = (sampleData + nextSampleData) / 2;
-
-							// little-endian
-							fos.write (sampleData & 0xff);
-							fos.write ((sampleData >> 8) & 0xff);
-						}
-					}
-					else
-					{
-						// if we are working with Cary's v3 file then he has undoubled and octaved down already
-						for (int sample = 0; sample < 256; sample++)
-						{
-							offset = tableOffset + waveOffset + sample;
-				
-							int	sampleData = buffer [offset];
-				
-							// little-endian
-							fos.write (sampleData & 0xff);
-							fos.write ((sampleData >> 8) & 0xff);
-						}
+						offset = tableOffset + waveOffset + sample;
+			
+						int	sampleData = buffer [offset];
+			
+						// little-endian
+						fos.write (sampleData & 0xff);
+						fos.write ((sampleData >> 8) & 0xff);
 					}
 				}
 			}
