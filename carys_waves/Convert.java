@@ -91,18 +91,90 @@ public class Convert
 				{
 					int	waveOffset = wave * 256;
 
-					// if we are working with Cary's v3 file then he has undoubled and octaved down already
 					for (int sample = 0; sample < 256; sample++)
 					{
-						offset = tableOffset + waveOffset + sample;
-			
-						int	sampleData = buffer [offset];
-			
+						int	sampleData = 0;
+						
+						if (wave < 60)
+						{
+							offset = tableOffset + waveOffset + sample;
+		
+							sampleData = buffer [offset];
+						}
+						else
+						if (wave == 60)
+						{
+							// triangle wave
+							
+							int	phase = sample / 64;
+							
+							if (phase == 0)
+							{
+								sampleData = (32768 / 64) * sample;
+							}
+							else
+							if (phase == 1)
+							{
+								sampleData = 32767 - ((32768 / 64) * (sample - 64));
+							}
+							if (phase == 2)
+							{
+								sampleData = (32768 / 64) * sample;
+								sampleData = -sampleData;
+							}
+							else
+							if (phase == 3)
+							{
+								sampleData = 32767 - ((32768 / 64) * (sample - 64));
+								sampleData = -sampleData;
+							}
+						}
+						else
+						if (wave == 61)
+						{
+							// 90% pulse wave
+							if (sample < 245)
+							{
+								sampleData = -32768;
+							}
+							else
+							{
+								sampleData = 32767;
+							}
+						}
+						else
+						if (wave == 62)
+						{
+							// square
+							if (sample < 128)
+							{
+								sampleData = -32768;
+							}
+							else
+							{
+								sampleData = 32767;
+							}
+						}
+						else
+						if (wave == 63)
+						{
+							// positive-going ramp
+
+							// we go from max neg to max positive in 256 steps
+							sampleData = (65536 / 256) * sample;
+							sampleData -= 32768;
+						}
+
 						// little-endian
 						fos.write (sampleData & 0xff);
 						fos.write ((sampleData >> 8) & 0xff);
 					}
 				}
+				
+				// OK, hack in waves 60-63
+				// which weren't in the wavetable
+				// and were hacked in by the PPG firmware
+				
 			}
 			finally
 			{
