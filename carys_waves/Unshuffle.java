@@ -7,6 +7,31 @@ public class Unshuffle
 	main (String[] inArgs)
 	throws Exception
 	{
+		System.out.println ("reading minirom_v3.bin");
+		
+		FileInputStream	fis = new FileInputStream ("minirom_v3.bin");
+		
+		// this is one of Cary's temp files
+		byte[]	buffer = new byte [65536];
+		
+		for (int i = 0; i < 8; i++)
+		{
+			fis.read (buffer);
+			
+			FileOutputStream	fos = new FileOutputStream ("temp" + (i + 1));
+			
+			try
+			{
+				fos.write (buffer);
+			}
+			finally
+			{
+				fos.close ();
+			}
+		}
+
+		System.out.println ("writing ppg_wavetables_linear.bin");
+
 		FileOutputStream	fos = new FileOutputStream ("ppg_wavetables_linear.bin");
 		
 		FileInputStream	temp1 = new FileInputStream ("temp1");
@@ -19,7 +44,7 @@ public class Unshuffle
 		FileInputStream	temp8 = new FileInputStream ("temp8");
 		
 		// as i calculate it, each discrete file is a wave
-		byte[]	buffer = new byte [256];
+		buffer = new byte [256];
 		
 		// idk wtf Cary starts at 1 here
 		for (int i = 1; i < 2049; i++)
@@ -76,6 +101,11 @@ public class Unshuffle
 		}
 
 		fos.close ();
+		
+		for (int i = 1; i <= 8; i++)
+		{
+			new File ("temp" + i).delete ();
+		}
 		
 	}
 	

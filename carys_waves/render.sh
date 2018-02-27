@@ -3,7 +3,6 @@
 # first we compile the java apps
 echo compiling apps
 
-javac Split.java
 javac Unshuffle.java
 javac Convert.java
 
