@@ -11,8 +11,9 @@ echo splitting the cary file into temps
 
 java Split minirom_v3.bin
 
-# unshuffle temp1-8 to give us the linear wavetable
-echo unshuffling temps into linear wavetable file
+# split Cary's binary file into the chunks
+# then unshuffle the chunks to give us the linear wavetables
+echo unshuffling chunks into linear wavetable file
 
 java Unshuffle 
 
